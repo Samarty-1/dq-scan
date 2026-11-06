@@ -1,14 +1,14 @@
-# Notes
+﻿# Implementation notes
 
-Edge cases for the null detector:
+The current contracts and limits are documented in README.md and IMPROVEMENTS.md.
 
-- empty string vs actual null — csv.DictReader gives "" for an empty cell, not None.
-- trailing comma on the last row produces a phantom empty column. Skip it.
-- BOM at the start of an export breaks the first header. Strip \ufeff.
-
-## Large files
-
-Reading the whole file into memory is fine up to ~50MB. Past that, stream row by
-row and aggregate per-column counters instead of holding the list. The numeric
-check (float() per cell) is the expensive part — skip it once a column shows more
-than a few non-numeric values.
+- Blank and whitespace-only cells are null; literal NA and NULL are text.
+- UTF-8 BOMs are stripped. Invalid UTF-8 raises an error rather than replacing bytes.
+- Duplicate or blank headers and mismatched row widths are errors. Trailing
+  fields are never silently discarded.
+- Quoted newlines and escaped quotes are supported; bare quotes are rejected.
+- Records are consumed once. Exact counts retain unique values, rows and keys;
+  this is not constant-memory processing.
+- Finite numeric means accumulate exact rational representations of binary
+  floats. Range checks use the CSV decimal representation against rule bounds.
+- Reports are read-only and contain no raw value samples or source paths.

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "row_count": 5,
+  "column_count": 3,
+  "duplicate_rows": 0,
+  "columns": [
+    {
+      "name": "order_id",
+      "type": "number",
+      "null_count": 0,
+      "null_fraction": 0.0,
+      "distinct_count": 5,
+      "duplicate_values": 0,
+      "nonfinite_count": 0,
+      "invalid_numeric_count": 0,
+      "out_of_range_count": 0,
+      "numeric": {
+        "count": 5,
+        "min": 1.0,
+        "max": 5.0,
+        "mean": 3.0
+      }
+    },
+    {
+      "name": "amount",
+      "type": "number",
+      "null_count": 1,
+      "null_fraction": 0.2,
+      "distinct_count": 4,
+      "duplicate_values": 0,
+      "nonfinite_count": 0,
+      "invalid_numeric_count": 0,
+      "out_of_range_count": 1,
+      "numeric": {
+        "count": 4,
+        "min": -3.2,
+        "max": 99.0,
+        "mean": 27.075
+      }
+    },
+    {
+      "name": "currency",
+      "type": "text",
+      "null_count": 0,
+      "null_fraction": 0.0,
+      "distinct_count": 2,
+      "duplicate_values": 3,
+      "nonfinite_count": 0,
+      "invalid_numeric_count": 0,
+      "out_of_range_count": 0,
+      "numeric": null
+    }
+  ],
+  "key": {
+    "columns": [
+      "order_id"
+    ],
+    "null_count": 0,
+    "duplicate_count": 0
+  },
+  "rules": {
+    "null_threshold": 0.1,
+    "ranges": {
+      "amount": {
+        "min": 0,
+        "max": 1000
+      }
+    }
+  },
+  "findings": [
+    {
+      "code": "null_threshold",
+      "severity": "warning",
+      "count": 1,
+      "column": "amount"
+    },
+    {
+      "code": "out_of_range",
+      "severity": "error",
+      "count": 1,
+      "column": "amount"
+    }
+  ]
+}
