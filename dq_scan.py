@@ -8,7 +8,13 @@ from collections import Counter
 
 def scan(path, delim=","):
     with open(path, newline="", encoding="utf-8", errors="replace") as f:
-        rows = list(csv.DictReader(f, delimiter=delim))
+        reader = csv.DictReader(f, delimiter=delim)
+        rows = []
+        for row in reader:
+            if None in row:
+                print(f"CSV row {reader.line_num} has extra fields beyond the header", file=sys.stderr)
+                return 1
+            rows.append(row)
     if not rows:
         print("empty file (no rows / no header)")
         return 1
